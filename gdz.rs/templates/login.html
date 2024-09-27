@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ text }}</title>
+    <style>
+        /* Добавьте свои стили здесь */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .login-container {
+            width: 30%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .login-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .login-container button:hover {
+            background-color: #004d99;
+        }
+        .login-container .register-button {
+            margin-top: 20px;
+            background-color: #f0f0f0;
+            color: #0066cc;
+            border: none;
+            text-align: center;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+            display: block;
+            width: 100%;
+            padding: 10px 0;
+        }
+        .login-container .register-button:hover {
+            background-color: #e0e0e0;
+        }
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 600px) {
+            .login-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Вход в аккаунт</h2>
+        <form action="/login" method="post">
+            <label for="username">Имя пользователя</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Войти</button>
+        </form>
+        <button class="register-button" onclick="window.location.href='/register'">Нет аккаунта?</button>
+    </div>
+</body>
+</html>
