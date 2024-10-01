@@ -38,6 +38,26 @@
             background-color: #45a049;
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
+        .logout-button {
+            background-color: #f44336;
+            border: none;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .logout-button:hover {
+            background-color: #e53935;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -58,6 +78,7 @@
         <button class="subject-button" onclick="window.location.href='/predmet/gradjansko-veronauka'">Грађанско/Веронаука</button>
         <button class="subject-button" onclick="window.location.href='/predmet/chos'">ЧОС</button>
         <button class="subject-button" onclick="window.location.href='/forum'">Форум (место у ком можите да причате са људима)</button>
+        <button class="logout-button" onclick="window.location.href='/logout'">Logout</button>
     </div>
 
 </body></html>
