@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Одно большое окно с картинкой</title>
+    <style>
+        /* Сброс отступов и высоты для html и body */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Контейнер, занимающий всю высоту окна */
+        .container {
+            display: flex;
+            justify-content: center; /* Горизонтальное центрирование */
+            align-items: center;    /* Вертикальное центрирование */
+            height: 100%;
+            background-color: #f0f0f0; /* Фоновый цвет контейнера */
+        }
+
+        /* Стили для изображения */
+        .container img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* Сохранение пропорций изображения */
+        }
+
+        /* Дополнительные стили для мобильных устройств */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px; /* Отступы для небольших экранов */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="/{{ image }}" alt="Описание изображения">
+    </div>
+</body>
+</html>
