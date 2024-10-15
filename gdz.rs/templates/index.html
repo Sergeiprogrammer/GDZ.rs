@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СДЗ - Спремни домаћи задаци</title>
+    <meta name="description" content="СДЗ - Спремни домаћи задаци. Најбољи ресурс за ученике да пронађу решене домаће задатке.">
+    <meta name="keywords" content="СДЗ, домаћи задаци, решења, школа, предмети, ученици">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .subject-button, .submit-homework-button, .logout-button {
+            border: none;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 20px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .subject-button {
+            background-color: #4CAF50;
+        }
+        .subject-button:hover {
+            background-color: #45a049;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        .logout-button {
+            background-color: #f44336;
+        }
+        .logout-button:hover {
+            background-color: #e53935;
+        }
+        .submit-homework-button {
+            background-color: #2196F3;
+            font-weight: bold;
+        }
+        .submit-homework-button:hover {
+            background-color: #1e88e5;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+        }
+        #searchInput {
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>СДЗ - Спремни домаћи задаци</h1>
+    </header>
+    <main>
+        <input type="text" id="searchInput" placeholder="Претражи..." onkeyup="searchPage()">
+        <div class="button-container">
+            <button class="subject-button" onclick="window.location.href='/predmet/fizika'">Физика</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/matematika'">Математика</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/geografija'">Географија</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/istorija'">Историја</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/srpski-jezik'">Српски језик</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/hemija'">Хемија</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/biologija'">Биологија</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/muzicko'">Музичко</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/likovno'">Ликовно</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/informatika'">Информатика</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/engleski-jezik'">Енглески језик</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/fizicko'">Физичко</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/gradjansko-veronauka'">Грађанско/Веронаука</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/chos'">ЧОС</button>
+            <button class="subject-button" onclick="window.location.href='/forum/0'">Форум (место у ком можете да причате са људима)</button>
+            <button class="submit-homework-button" onclick="window.location.href='/submit-homework'">Пошаљи домаћи задатак</button>
+            <button class="logout-button" onclick="window.location.href='/logout'">Одјави се</button>
+        </div>
+    </main>
+    <footer>
+        <!-- Овде можете додати фусноту ако је потребно -->
+    </footer>
+    <script>
+        function searchPage() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const buttons = document.getElementsByClassName('subject-button');
+            for (let i = 0; i < buttons.length; i++) {
+                const button = buttons[i];
+                const textValue = button.textContent || button.innerText;
+                if (textValue.toUpperCase().indexOf(filter) > -1) {
+                    button.style.display = "";
+                } else {
+                    button.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
