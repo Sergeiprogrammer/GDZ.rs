@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="sr">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Избор разреда</title>
+    <style>
+        /* Глобальные стили */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+        /* Стили заголовка */
+        h1 {
+            font-size: 36px;
+            color: #00698f;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        /* Стили списка */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        li {
+            margin: 20px;
+            flex-basis: 20%;
+        }
+        /* Стили кнопки */
+        .button {
+            text-decoration: none;
+            color: #00698f;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.2s ease;
+            display: block;
+            text-align: center;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #f7f7f7;
+        }
+        /* Адаптивный дизайн */
+        @media (max-width: 768px) {
+            li {
+                flex-basis: 40%;
+            }
+        }
+        @media (max-width: 480px) {
+            li {
+                flex-basis: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Изаберите разред</h1>
+    <ul>
+        {% for razred in range(1, 9) %}
+        <li>
+            <div class="button" onclick="window.location.href='{{ url_for('show_razred', ime=ime, razred=razred) }}'">Разред {{ razred }}</div>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пошаљаније домачег задатака</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        select,
+        input[type="file"],
+        input[type="text"],
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .instructions {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Пошаљаније домачег задатака</h1>
+        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="taskType">Тип задания:</label>
+                <select id="taskType" name="taskType" required>
+                    <option value="" disabled selected>Выберите тип задания</option>
+                    <option value="homework">Домашнее задание</option>
+                    <option value="lecture">Лекция</option>
+                    <option value="explanation">Объяснение</option>
+                    <option value="test_prep">Подготовка к тесту</option>
+                    <option value="other">Другое</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="photo">Слика:</label>
+                <input type="file" id="photo" name="photo" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label for="text">Информација:</label>
+                <input type="text" id="text" name="text" placeholder="напиши информацију о домачи" required>
+            </div>
+            <button type="submit">Послати</button>
+        </form>
+        <div class="instructions">
+            <h2>Како потребно да шаљем домачи? Овде има инструкција</h2>
+            <p>Примеры типов заданий:</p>
+            <ul>
+                <li><b>Домашнее задание:</b> Укажите тему или номер задачи.</li>
+                <li><b>Лекция:</b> Загрузите конспект или задайте вопросы.</li>
+                <li><b>Объяснение:</b> Опишите, что именно вам нужно объяснить.</li>
+                <li><b>Подготовка к тесту:</b> Укажите тему теста.</li>
+                <li><b>Другое:</b> Напишите, что именно вы хотите отправить.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
