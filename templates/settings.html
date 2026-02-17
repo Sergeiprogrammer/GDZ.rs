@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>параметре налога</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .item {
+            margin-bottom: 15px;
+        }
+        .alert {
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        form input {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        form button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+        .logout, .faq-button {
+            display: block;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        .logout {
+            background-color: #dc3545;
+            color: white;
+        }
+        .logout:hover {
+            background-color: #c82333;
+        }
+        .faq-button {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .faq-button:hover {
+            background-color: #138496;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Настройки аккаунта</h1>
+
+        <!-- 1. Отображение имени пользователя -->
+        <div class="item">
+            <p>Корисник: <strong>{{ username }}</strong></p>
+        </div>
+
+        <!-- 2. Сообщения об успехе или ошибке -->
+        {% if message %}
+        <div class="alert success">{{ message }}</div>
+        {% endif %}
+
+        {% if error %}
+        <div class="alert error">{{ error }}</div>
+        {% endif %}
+
+        <!-- 3. Форма для ввода кода активации параметра учителя -->
+        <div class="item">
+            <form action="/settings" method="post">
+                <label for="teacher_code">унесите код активације за привилегије наставника</label>
+                <input type="text" id="teacher_code" name="teacher_code" placeholder="Код активацији" required>
+                <button type="submit">Активирати</button>
+            </form>
+        </div>
+
+        <!-- 4. Ссылка для выхода из аккаунта -->
+        <div class="item">
+            <a href="/logout" class="logout">излази са налога</a>
+        </div>
+
+        <!-- 5. Кнопка для перехода на страницу "Информация и правила" -->
+        <div class="item">
+            <a href="/faq" class="faq-button">Информација и правила</a>
+        </div>
+    </div>
+</body>
+</html>

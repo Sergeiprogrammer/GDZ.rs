@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>FAQ Accordion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      /* Сброс стилей */
+      @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+      * {
+        -webkit-font-smoothing: antialiased;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      button:focus-visible {
+        outline: 2px solid #4a90e2 !important;
+        outline: -webkit-focus-ring-color auto 5px !important;
+      }
+      a {
+        text-decoration: none;
+      }
+
+      /* Основной контейнер */
+      .box {
+        max-width: 1242px;
+        margin: 20px auto;
+        padding: 0 20px;
+      }
+      
+      /* Обертка аккордеона */
+      .accordion-wrapper {
+        width: 100%;
+      }
+
+      /* Шапка макета */
+      .divider-component {
+        width: 100%;
+        background-color: #ffffff;
+        border-radius: 18px;
+        box-shadow: 0px 12px 24px rgba(20, 19, 42, 0.04),
+          0px -2px 4px rgba(20, 19, 42, 0.02),
+          0px 3px 14px rgba(73, 57, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        margin-bottom: 20px;
+      }
+      .text-wrapper-2 {
+        font-family: "DM Sans-Bold", Helvetica, sans-serif;
+        font-weight: 700;
+        color: #170f49;
+        font-size: 24px;
+        margin: 0;
+      }
+      .frame {
+        background-color: #f2f1ff;
+        border-radius: 50px;
+        padding: 16px 28px;
+
+        /* Делаем "кнопку" */
+        cursor: pointer; 
+        transition: filter 0.2s ease;
+      }
+      /* Эффект легкого затемнения при наведении */
+      .frame:hover {
+        filter: brightness(0.9);
+      }
+
+      .text-wrapper-3 {
+        font-family: "DM Sans-Medium", Helvetica, sans-serif;
+        font-weight: 500;
+        color: #4a3aff;
+        font-size: 16px;
+        margin: 0;
+      }
+
+      /* Элементы аккордеона */
+      .accordion-item {
+        background-color: #ffffff;
+        border-radius: 14px;
+        border: 2px solid #4a3aff;
+        box-shadow: 0px 6px 16px rgba(73, 57, 255, 0.19);
+        margin-bottom: 20px;
+        overflow: hidden;
+      }
+      .accordion-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        cursor: pointer;
+      }
+      .accordion-header .p {
+        font-family: "DM Sans-Medium", Helvetica, sans-serif;
+        font-weight: 500;
+        color: #170f49;
+        font-size: 22px;
+        margin: 0;
+      }
+      .vector-wrapper,
+      .img-wrapper {
+        width: 51px;
+        height: 51px;
+        background-color: #4a3aff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .vector,
+      .img {
+        width: 19px;
+        height: 10px;
+      }
+      .accordion-content {
+        padding: 16px 20px;
+        display: none;
+        font-family: "DM Sans-Regular", Helvetica, sans-serif;
+        font-weight: 400;
+        color: #6e6b8f;
+        font-size: 18px;
+        line-height: 30px;
+      }
+
+      /* Адаптивность */
+      @media (max-width: 768px) {
+        .text-wrapper-2 {
+          font-size: 20px;
+        }
+        .accordion-header .p {
+          font-size: 18px;
+        }
+        .accordion-content {
+          font-size: 16px;
+          line-height: 26px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="accordion-wrapper">
+        <!-- Шапка -->
+        <div class="divider-component">
+          <div class="text-wrapper-2">Odgovori na pitanija</div>
+          <!-- Кнопка "Домой" -->
+          <div class="frame" onclick="window.location.href='/'">
+            <div class="text-wrapper-3">Vrati na početnu stranu</div>
+          </div>
+        </div>
+        <!-- от сих -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <p class="p">zašto potreban ovaj sajt</p>
+            <div class="vector-wrapper">
+              <img class="vector" src="img/image.svg" alt="Toggle" />
+            </div>
+          </div>
+          <div class="accordion-content">
+            <p>
+              na ovom sajtu vi imate mogučnost da pripišite nečijev domači ili pošalijte svoj da bih pomogli nekomu
+            </p>
+          </div>
+        </div>
+        <!-- до сих 1 пункт копируй и не парься -->
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <p class="p">koji pravila koriščenija sajta</p>
+            <div class="img-wrapper">
+              <img class="img" src="img/vector-205-2.svg" alt="Toggle" />
+            </div>
+          </div>
+          <div class="accordion-content">
+            <p>
+              svaki maretijal koji vi šalijte provera administracija ako vi pošalijite nešto šta naršava zakon propogondira loše stvari povezana sa nekimi 18+ temovima vaš nalog dobije opoveštenije a na drugi put biče blokiran
+            </p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <p class="p">ko napravio ovaj sajt </p>
+            <div class="img-wrapper">
+              <img class="img" src="img/vector-205-3.svg" alt="Toggle" />
+            </div>
+          </div>
+          <div class="accordion-content">
+            <p>
+              ovaj sajt napravio dva dečka 14 i ** godina (ja nisam ga pitao dali mogu da napišem nijegov stvarni uzrast)
+              14 to je programer sajta, taj ko smislio i potpuno uradio ovaj sajt
+              ** dizajner sajta i moj prijatelj napravio mnogu ideje i savjeta
+              kako vi vidite uzrast apsolutno ništa ne znači ako čovek zna šta i kako radi
+            </p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <p class="p">kako planirm da ga razvijem</p>
+            <div class="img-wrapper">
+              <img class="img" src="img/vector-205.svg" alt="Toggle" />
+            </div>
+          </div>
+          <div class="accordion-content">
+            <p>
+              planiram da dam pojeni za poslane domaći i na ovi pojene može da kupuje rešenija domači od drugih korisnika i planiram da povečam kvalitet sajta
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Для каждого заголовка аккордеона переключаем состояние отображения
+      document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', function () {
+          const content = this.nextElementSibling;
+          content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        });
+      });
+    </script>
+  </body>
+</html>

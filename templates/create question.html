@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Направити тему за форум</title>
+    <script>
+        // Экранирование данных перед отображением (если данные приходят с сервера)
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.appendChild(document.createTextNode(str));
+            return div.innerHTML;
+        }
+    </script>
+</head>
+<body>
+    <h1>направи тему за форум</h1>
+    <form action="/create_topic" method="POST">
+        <!-- Поле для темы -->
+        <label for="topic">Тема:</label><br>
+        <input 
+            type="text" 
+            id="topic" 
+            name="topic" 
+            placeholder="напиши тему" 
+            required
+            oninput="this.value = this.value.replace(/<|>|'|"|`/g, '')"><br><br>
+
+        <!-- Поле для названия -->
+        <label for="title">Назив:</label><br>
+        <input 
+            type="text" 
+            id="title" 
+            name="title" 
+            placeholder="напиши назив" 
+            required
+            oninput="this.value = this.value.replace(/<|>|'|"|`/g, '')"><br><br>
+
+        <!-- Кнопка отправки -->
+        <button type="submit">направити</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Отправка задания</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    select,
+    input[type="file"],
+    input[type="text"],
+    textarea,
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .instructions {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e9ecef;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Отправка задания</h1>
+    <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+      
+      <!-- Выбор типа задания -->
+      <div class="form-group">
+        <label for="taskType">Тип задания:</label>
+        <select id="taskType" name="taskType" required>
+          <option value="" disabled selected>Выберите тип задания</option>
+          <option value="homework">Домашка</option>
+          <option value="test_prep">Подготовка к тесту</option>
+          <option value="courses">Курсы</option>
+          <option value="help">Помощь</option>
+          <option value="lesson">Урок</option>
+          <option value="teacher_material">Учительский материал</option>
+          <option value="scientific_article">Научная статья</option>
+          <option value="project">Проект</option>
+          <option value="discussion">Дискусия</option>
+        </select>
+      </div>
+      
+      <!-- Загрузка файла (изображение, txt, pdf и др.) -->
+      <div class="form-group">
+        <label for="fileUpload">Файл (изображение, .txt, .pdf и др.):</label>
+        <input type="file" id="fileUpload" name="fileUpload">
+      </div>
+      
+      <!-- Альтернативный ввод текста -->
+      <div class="form-group">
+        <label for="textInput">Текстовое содержание:</label>
+        <textarea id="textInput" name="textInput" placeholder="Введите текстовое содержание, если не загружаете файл" rows="5"></textarea>
+      </div>
+      
+      <button type="submit">Отправить</button>
+    </form>
+    
+    <div class="instructions">
+      <h2>Инструкции</h2>
+      <ul>
+        <li>Выберите тип задания из списка.</li>
+        <li>Вы можете загрузить файл (например, изображение, документ .txt, .pdf и т.п.) или ввести информацию вручную в текстовое поле.</li>
+        <li>Если задание связано с учебником, обязательно укажите название задания, страницу, название учебника и приложите изображение (при наличии).</li>
+        <li>Загружайте только материалы, относящиеся к теме обучения.</li>
+        <li>Нарушение правил может привести к блокировке аккаунта.</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПЗУ - Помоч за учењје</title>
+    <meta name="description" content="ПЗУ - Помоч за учењје. Најбољи ресурс за ученике да пронађу помоч на нету.">
+    <meta name="keywords" content="ПЗУ, домаћи задаци, решења, школа, предмети, ученици">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .subject-button, .submit-homework-button, .logout-button {
+            border: none;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 20px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .subject-button {
+            background-color: #4CAF50;
+        }
+        .subject-button:hover {
+            background-color: #45a049;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        .logout-button {
+            background-color: #f44336;
+        }
+        .logout-button:hover {
+            background-color: #e53935;
+        }
+        .submit-homework-button {
+            background-color: #2196F3;
+            font-weight: bold;
+        }
+        .submit-homework-button:hover {
+            background-color: #1e88e5;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+        }
+        #searchInput {
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .is_register-display {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            background: #fff;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            background: #fff;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ПЗУ - Помоч за учењје</h1>
+        <!-- Вставка для отображения денег -->
+        <div class="is_register-display" onclick="window.location.href='/register'">
+            {{ is_register }}
+        </div>
+        <div class="faq" onclick="window.location.href='/faq'">
+            допунска информација
+        </div>
+
+    </header>
+    <main>
+        <input type="text" id="searchInput" placeholder="Претражи..." onkeyup="searchPage()">
+        <div class="button-container">
+            <button class="subject-button" onclick="window.location.href='/predmet/fizika'">Физика</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/matematika'">Математика</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/geografija'">Географија</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/istorija'">Историја</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/srpski_jezik'">Српски језик</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/hemija'">Хемија</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/biologija'">Биологија</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/muzicko'">Музичко</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/likovno'">Ликовно</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/informatika'">Информатика</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/engleski_jezik'">Енглески језик</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/nemacki_jezik'">Немачки језик</button>
+            <button class="submit-homework-button" onclick="window.location.href='/pomoc_za_zavrsni'">Помоћ за завршни испит</button>
+            <button class="subject-button" onclick="window.location.href='/predmet/tehnologija'">технологија</button>
+            <button class="subject-button" onclick="window.location.href='/forum/0'">Форум (место у ком можете да причате са људима)</button>
+            <button class="submit-homework-button" onclick="window.location.href='/teacher_info'">информација коју шаље наставнице школа</button>
+            <button class="submit-homework-button" onclick="window.location.href='/settings'">параметрови налога</button>
+            <button class="submit-homework-button" onclick="window.location.href='/submit-homework'">Пошаљи нешто за учењје (и за ученика и за натавница)</button>
+            <button class="submit-homework-button" onclick="window.location.href='/logout'">Одјави се</button>
+            <button class="submit-homework-button" onclick="window.location.href='/converter'">конвертер чирилица ↔ латиница</button>
+        </div>
+    </main>
+    <footer>
+        <!-- Овде можете додати фусноту ако је потребно -->
+    </footer>
+    <script>
+        function searchPage() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const buttons = document.getElementsByClassName('subject-button');
+            for (let i = 0; i < buttons.length; i++) {
+                const button = buttons[i];
+                const textValue = button.textContent || button.innerText;
+                if (textValue.toUpperCase().indexOf(filter) > -1) {
+                    button.style.display = "";
+                } else {
+                    button.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

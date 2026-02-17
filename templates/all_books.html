@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Домачи</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .image-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px; /* Добавляем промежутки между элементами */
+        }
+
+        .image-grid .image-item {
+            width: 120px;
+            margin: 5px;
+            background-color: #f0f0f0;
+            text-align: center; /* Center the text under the image */
+        }
+        .image-grid .image-item img {
+            max-width: 100%;
+            height: auto;
+        }
+        .image-grid .image-item p {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+        #searchInput {
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-button">Назад</a>
+    <h1>медиа фајлови</h1>
+    <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchImages()">
+    <div class="image-grid" id="imageGrid">
+        {% for path, info_item , url1 in image_info %}
+        <div class="image-item">
+            <img src="/{{ path }}" alt="Image">
+            <p>{{ info_item }}</p>
+            <div class="button">
+                <a href="{{ url1 }}">Разред {{ razred }}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        function searchImages() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const items = document.getElementsByClassName('image-item');
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                const textValue = item.textContent || item.innerText;
+                if (textValue.toUpperCase().indexOf(filter) > -1) {
+                    item.style.display = "";
+                } else {
+                    item.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

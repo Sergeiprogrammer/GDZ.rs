@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Избор разреда</title>
+    <style>
+        /* Глобальные стили */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+        /* Стили заголовка */
+        h1 {
+            font-size: 36px;
+            color: #00698f;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        /* Стили списка */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        li {
+            margin: 20px;
+            flex-basis: 20%;
+        }
+        /* Стили кнопки */
+        .button-form {
+            display: inline-block;
+            margin: 5px;
+        }
+        .button-form button {
+            text-decoration: none;
+            color: #00698f;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            display: block;
+            text-align: center;
+            cursor: pointer;
+        }
+        .button-form button:hover {
+            background-color: #f7f7f7;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        /* Стили кнопки "Вернуться" */
+        .back-button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #ff5757;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .back-button:hover {
+            background-color: #d94343;
+            transform: scale(1.05);
+        }
+        /* Адаптивный дизайн */
+        @media (max-width: 768px) {
+            li {
+                flex-basis: 40%;
+            }
+        }
+        @media (max-width: 480px) {
+            li {
+                flex-basis: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Изаберите разред основне школе</h1>
+    <div id="osnovna-skola"></div>
+
+    <h1>Изаберите разред средње школе</h1>
+    <div id="srednja-skola"></div>
+
+    <a href="/" class="back-button">На почетну страну</a>
+
+    <script>
+        const ime = "{{ ime }}";  // Если имя передается в шаблон
+        const osnovnaContainer = document.getElementById('osnovna-skola');
+        const srednjaContainer = document.getElementById('srednja-skola');
+
+        // Создаем кнопки для основне школе (разряды 1-8)
+        for (let razred = 1; razred <= 8; razred++) {
+            osnovnaContainer.innerHTML += `
+                <form class="button-form" method="post" action="/predmet/${ime}">
+                    <input type="hidden" name="ime" value="${ime}">
+                    <input type="hidden" name="razred" value="${razred}">
+                    <button type="submit">Разред ${razred}</button>
+                </form>
+            `;
+        }
+
+        // Создаем кнопки для средње школе (разряды 9-14)
+        for (let i = 1; i <= 6; i++) {
+            const razred = 8 + i;
+            srednjaContainer.innerHTML += `
+                <form class="button-form" method="post" action="/predmet/${ime}">
+                    <input type="hidden" name="ime" value="${ime}">
+                    <input type="hidden" name="razred" value="${razred}">
+                    <button type="submit">Разред ${razred}</button>
+                </form>
+            `;
+        }
+    </script>
+</body>
+</html>

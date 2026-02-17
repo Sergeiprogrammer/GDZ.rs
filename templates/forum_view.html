@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форум - {{ page_name }}</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background-color: #e6e6e6;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #4CAF50;
+            margin-top: 30px;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        textarea {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            resize: none;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .message-author {
+            font-weight: bold;
+        }
+        .message-time {
+        }
+        .message-message {
+            display: flex;
+            font-weight: bold;
+            margin: 0;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Форум - {{ page_name }}</h1>
+
+        <h2>Порука</h2>
+        <ul id="message-list">
+            {% for forum in forums %}
+            <li>
+                <span class="message-author">{{ forum[0] }}</span>
+                <span class="message-time">{{ forum[1] }}</span><br>
+                <span class="message-time">forum: {{ forum[2] }}</span><br>
+                <span class="message-message">{{ forum[4] }}</span><br>
+                {% if forum[0] == session['user'] %}
+                    <button onclick="window.location.href='/forum/delete/{{ forum[0] }}/{{ forum[3] }}'">Уничтожить эту поруку</button>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+
+        <form action="/forum/{{ page_name }}/{{ forum_id }}" method="post">
+            <textarea name="comment" rows="4" placeholder="нови коментар"></textarea><br>
+            <input type="submit" value="пошаљте">
+            <button type="button" id="myButton">додај други поруке</button>
+        </form>
+    </div>
+
+    <!-- Передача переменной sessionUser в JavaScript -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentPage = 1; // Начинаем с первой страницы (0 уже загружена)
+        var loadMoreButton = document.getElementById('myButton');
+        var messageList = document.getElementById('message-list');
+
+        loadMoreButton.addEventListener('click', function() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/forum/{{ page_name }}/ajax', true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        var messages = data.response_text;
+                        if (messages.length === 0) {
+                            loadMoreButton.disabled = true;
+                            loadMoreButton.textContent = 'више нема порука';
+                        } else {
+                            for (var i = 0; i < messages.length; i++) {
+                                var msg = messages[i];
+                                var author = msg[0];
+                                var time = msg[1];
+                                var forum = msg[2];
+                                var id = msg[3];
+                                var message = msg[4];
+
+                                var newMessage = document.createElement('li');
+                                var messageHTML = '<span class="message-author">' + author + '</span>' +
+                                                  '<span class="message-time">' + time + '</span><br>' +
+                                                  '<span class="message-time">forum: ' + forum + '</span><br>' +
+                                                  '<span class="message-message">' + message + '</span><br>';
+
+                                if (author === '{{ session["user"] }}') {
+                                    messageHTML += '<button onclick="window.location.href=\'/forum/delete/' + author + '/' + id + '\'">Удалить это сообщение</button>';
+                                }
+
+                                newMessage.innerHTML = messageHTML;
+                                messageList.appendChild(newMessage);
+                            }
+                            currentPage++; // Увеличиваем номер страницы после успешной загрузки
+                        }
+                    } else {
+                        console.error('грешка: ' + xhr.statusText);
+                    }
+                }
+            };
+            xhr.send(JSON.stringify({ page: currentPage }));
+        });
+    });
+</script>
+
+</body>
+</html>

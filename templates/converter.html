@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Конвертер текста (PPTX и Ćirilica ↔ Latinica)</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .section {
+      margin-bottom: 40px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .section h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    textarea {
+      width: 80%;
+      height: 150px;
+      margin-bottom: 10px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: none;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin: 5px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .btn-copy {
+      background-color: #007bff;
+      color: white;
+    }
+    .btn-copy:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <!-- Раздел для обработки PPTX -->
+  <div class="section" id="pptx-converter">
+    <h2>Преводилац презентацији из латинице у чирилицу (и супротно)</h2>
+    <p>унесите презентацију (pttx формата)</p>
+    <input type="file" id="fileInput" accept=".pptx">
+    <button onclick="extractText()">прво кликните ову дугму</button>
+    <button onclick="convertAndDownload()">инсталирај са промењеним текстом</button>
+    <pre id="output"></pre>
+  </div>
+
+  <!-- Раздел для конвертации текста между Ćириллицей и латиницей -->
+  <div class="section" id="text-converter">
+    <h2>Ćirilica ↔ Latinica</h2>
+    <textarea id="cyrillic" placeholder="Введите текст на кириллице..."></textarea>
+    <button class="btn-copy" onclick="copyText('cyrillic')">копирај чирилицу</button>
+    <textarea id="latin" placeholder="Unesite tekst na latinici..."></textarea>
+    <button class="btn-copy" onclick="copyText('latin')">копирај латиницу</button>
+  </div>
+
+  <script>
+    /* Функции для работы с PPTX */
+    let zip, slideFiles, fileInput;
+
+    async function extractText() {
+      fileInput = document.getElementById("fileInput").files[0];
+      if (!fileInput) {
+        alert("изаберите презентацију (формата .pptx ако није искористите конвертер у pttx)!");
+        return;
+      }
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(fileInput);
+      reader.onload = async function(event) {
+        zip = await JSZip.loadAsync(event.target.result);
+        slideFiles = Object.keys(zip.files).filter(name => name.match(/^ppt\/slides\/slide\d+\.xml$/));
+        let extractedText = "";
+        for (let file of slideFiles) {
+          const content = await zip.file(file).async("text");
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(content, "text/xml");
+          const textNodes = xmlDoc.getElementsByTagName("a:t");
+          for (let node of textNodes) {
+            extractedText += node.textContent + "\n";
+          }
+        }
+        document.getElementById("output").textContent = extractedText || "Текст није нађен.";
+      };
+    }
+
+    // Функция для транслитерации из латиницы в кириллицу (PPTX)
+    function transliterateToCyrillic(text) {
+      // Обработка многосимвольных комбинаций
+      text = text.replace(/dž/gi, function(match) {
+        return match[0] === 'D' ? 'Џ' : 'џ';
+      });
+      text = text.replace(/lj/gi, function(match) {
+        return match[0] === 'L' ? 'Љ' : 'љ';
+      });
+      text = text.replace(/nj/gi, function(match) {
+        return match[0] === 'N' ? 'Њ' : 'њ';
+      });
+      const latinToCyr = {
+        "a": "а", "A": "А",
+        "b": "б", "B": "Б",
+        "c": "ц", "C": "Ц",
+        "č": "ч", "Č": "Ч",
+        "ć": "ћ", "Ć": "Ћ",
+        "d": "д", "D": "Д",
+        "đ": "ђ", "Đ": "Ђ",
+        "e": "е", "E": "Е",
+        "f": "ф", "F": "Ф",
+        "g": "г", "G": "Г",
+        "h": "х", "H": "Х",
+        "i": "и", "I": "И",
+        "j": "ј", "J": "Ј",
+        "k": "к", "K": "К",
+        "l": "л", "L": "Л",
+        "m": "м", "M": "М",
+        "n": "н", "N": "Н",
+        "o": "о", "O": "О",
+        "p": "п", "P": "П",
+        "q": "q", "Q": "Q",
+        "r": "р", "R": "Р",
+        "s": "с", "S": "С",
+        "š": "ш", "Š": "Ш",
+        "t": "т", "T": "Т",
+        "u": "у", "U": "У",
+        "v": "в", "V": "В",
+        "w": "w", "W": "W",
+        "x": "x", "X": "X",
+        "y": "y", "Y": "Y",
+        "z": "з", "Z": "З",
+        "ž": "ж", "Ž": "Ж"
+      };
+      return text.split('').map(char => latinToCyr[char] || char).join('');
+    }
+
+    // Функция для транслитерации из кириллицы в латиницу (PPTX)
+    function transliterateToLatin(text) {
+      const cyrToLat = {
+        "а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "ђ": "đ", "е": "e", "ж": "ž", "з": "z", "и": "i", "ј": "j", "к": "k", "л": "l", "љ": "lj", "м": "m", "н": "n", "њ": "nj", "о": "o", "п": "p", "р": "r", "с": "s", "т": "t", "ћ": "ć", "у": "u", "ф": "f", "х": "h", "ц": "c", "ч": "č", "џ": "dž", "ш": "š",
+        "А": "A", "Б": "B", "В": "V", "Г": "G", "Д": "D", "Ђ": "Đ", "Е": "E", "Ж": "Ž", "З": "Z", "И": "I", "Ј": "J", "К": "K", "Л": "L", "Љ": "LJ", "М": "M", "Н": "N", "Њ": "NJ", "О": "O", "П": "P", "Р": "R", "С": "S", "Т": "T", "Ћ": "Ć", "У": "U", "Ф": "F", "Х": "H", "Ц": "C", "Ч": "Č", "Џ": "DŽ", "Ш": "Ш"
+      };
+      return text.split('').map(char => cyrToLat[char] || char).join('');
+    }
+
+    async function convertAndDownload() {
+      if (!zip || !slideFiles) {
+        alert("прво пошаљите докуменат!");
+        return;
+      }
+      const toCyrillic = confirm("преведи у чирилицу (OK) или у латиницу (друга дугма)?");
+      for (let file of slideFiles) {
+        let content = await zip.file(file).async("text");
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(content, "text/xml");
+        const textNodes = xmlDoc.getElementsByTagName("a:t");
+        for (let node of textNodes) {
+          node.textContent = toCyrillic
+            ? transliterateToCyrillic(node.textContent)
+            : transliterateToLatin(node.textContent);
+        }
+        const serializer = new XMLSerializer();
+        zip.file(file, serializer.serializeToString(xmlDoc));
+      }
+      const newZip = await zip.generateAsync({ type: "blob" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(newZip);
+      a.download = "translated.pptx";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    /* Функции для преобразования текста между Ćириллицей и латиницей */
+    document.getElementById("cyrillic").addEventListener("input", function () {
+      document.getElementById("latin").value = transliterate(this.value, "cl");
+    });
+    document.getElementById("latin").addEventListener("input", function () {
+      document.getElementById("cyrillic").value = transliterate(this.value, "lc");
+    });
+
+    function transliterate(text, direction) {
+      const cyrToLat = {
+        "а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "ђ": "đ", "е": "e", "ж": "ž",
+        "з": "z", "и": "i", "ј": "j", "к": "k", "л": "l", "љ": "lj", "м": "m", "н": "n",
+        "њ": "nj", "о": "o", "п": "p", "р": "r", "с": "s", "т": "t", "ћ": "ć", "у": "u",
+        "ф": "f", "х": "h", "ц": "c", "ч": "č", "џ": "dž", "ш": "š",
+        "А": "A", "Б": "B", "В": "V", "Г": "G", "Д": "D", "Ђ": "Đ", "Е": "E", "Ж": "Ž",
+        "З": "Z", "И": "I", "Ј": "J", "К": "K", "Л": "L", "Љ": "LJ", "М": "M", "Н": "N",
+        "Њ": "NJ", "О": "O", "П": "P", "Р": "R", "С": "S", "Т": "T", "Ћ": "Ć", "У": "U",
+        "Ф": "F", "Х": "H", "Ц": "C", "Ч": "Č", "Џ": "DŽ", "Ш": "Š"
+      };
+
+      const latToCyr = {
+        "lj": "љ", "nj": "њ", "dž": "џ", "š": "ш", "č": "ч", "ć": "ћ", "ž": "ж", "đ": "ђ",
+        "Lj": "Љ", "Nj": "Њ", "Dž": "Џ", "Š": "Ш", "Č": "Ч", "Ć": "Ћ", "Ž": "Ж", "Đ": "Ђ"
+      };
+
+      // Обеспечим двунаправленное отображение
+      for (let key in cyrToLat) {
+        latToCyr[cyrToLat[key]] = key;
+      }
+
+      if (direction === "cl") {
+        // Перевод из кириллицы в латиницу
+        return text.replace(/./g, char => cyrToLat[char] || char);
+      } else {
+        // Перевод из латиницы в кириллицу
+        return text.replace(/Lj|Nj|Dž|Š|Č|Ć|Ž|Đ|lj|nj|dž|š|č|ć|ž|đ|./g, match => latToCyr[match] || match);
+      }
+    }
+
+    function copyText(id) {
+      let textArea = document.getElementById(id);
+      textArea.select();
+      document.execCommand("copy");
+      alert("Текст копиран!");
+    }
+  </script>
+</body>
+</html>

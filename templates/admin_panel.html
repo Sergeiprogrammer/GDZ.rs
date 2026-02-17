@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+        }
+        form h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        form input, form textarea, form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        form button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+    <script>
+        // Функция для удаления опасных символов из текста
+        function sanitizeInput(input) {
+            return input.replace(/[<>'"`]/g, '');
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.querySelector("form");
+            form.addEventListener("submit", (event) => {
+                // Проверка и очистка полей перед отправкой
+                const topic = document.getElementById("topic");
+                const title = document.getElementById("title");
+                const additionalInfo = document.getElementById("additional_info");
+
+                topic.value = sanitizeInput(topic.value);
+                title.value = sanitizeInput(title.value);
+                additionalInfo.value = sanitizeInput(additionalInfo.value);
+            });
+        });
+    </script>
+</head>
+<body>
+    <form method="POST" action="/admin_panel">
+        <h1>Админ Панель</h1>
+        <label for="topic">Тема</label>
+        <input type="text" id="topic" name="topic" placeholder="Введите тему" required>
+
+        <label for="title">Название</label>
+        <input type="text" id="title" name="title" placeholder="Введите название" required>
+
+        <label for="additional_info">Дополнительная информация</label>
+        <textarea id="additional_info" name="additional_info" placeholder="Введите дополнительную информацию" rows="5"></textarea>
+
+        <button type="submit">Создать</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Направити тему</title>
+</head>
+<body>
+    <h1>Направи тему за форум</h1>
+    <form action="" method="POST">
+        <!-- Поле для темы -->
+        <label for="topic">Тема:</label><br>
+        <input type="text" id="topic" name="topic" placeholder="унесите тему" required><br><br>
+
+        <!-- Поле для названия -->
+        <label for="title">Назив:</label><br>
+        <input type="text" id="title" name="title" placeholder="унесите назив" required><br><br>
+
+        <!-- Поле для дополнительной информации -->
+        <label for="additional_info">допунска информација:</label><br>
+        <textarea id="additional_info" name="additional_info" rows="4" cols="50" placeholder="унесите допунску информацијз"></textarea><br><br>
+
+        <!-- Поле для школы (может быть необязательным) -->
+        <label for="school">Школа (Није обавезно):</label><br>
+        <input type="text" id="school" name="school" placeholder="унесите назив школе"><br><br>
+
+        <!-- Кнопка отправки -->
+        <button type="submit">Создать</button>
+    </form>
+</body>
+</html>

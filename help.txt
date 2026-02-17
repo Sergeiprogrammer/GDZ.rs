@@ -1,0 +1,26 @@
+How use my project:
+
+This is my site for school that you can use for base or learning or using. its use python flask and sqlite
+
+Requirements:
+Installed python, pip, all libraries (read setup)
+Enough resosurses depend on amount of users if it only you enough it can start on every pc might on phone
+
+
+Setup
+1 install python go to official site python.org and install python if you don't know how make it go to video for help
+*if you watching it in future my project use python 3.6 and work on every python 3 but i don't test it on python 4 (in this moment its doesn't exist)
+	1.1 install pip
+	1.2 install all require libraries open terminal and type right command for your OS:
+	   windows/Mac OS pip install -r requirements.txt
+	   Linux: pip3 install -r requirements.txt
+	1.3 Ensure that everything work start file check.py and read his answer 
+2 start file setup in installed gds folder it create databases and other stuff
+	2.1 in email module set your custom email address and 
+	2.2 in tg bot.py insert your bot id and id of group bot id can get by watching guide from video for help
+		* if you want to get group id you must add bot to this group and using you own script get group id
+	2.4 start file main.py it create a localhost sever its real site but noone can use because its local and only on your pc if you want to make it unloccal you need knowledge about web development so when you get you probably can make it :)
+
+Videos for help
+How install python and pip? = https://youtu.be/NES0LRUFMBE?si=6waOUyDcutUXSglR
+How setup telebot? = https://youtu.be/vZtm1wuA2yc?si=1hiPz14NiOUpexvK
